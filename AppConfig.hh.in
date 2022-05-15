@@ -1,0 +1,9 @@
+#ifndef APP_CONFIG_HH_
+#define APP_CONFIG_HH_
+
+#define APP_VERSION "v0.0.1"
+#cmakedefine APP_INSTALL_PATH "@APP_INSTALL_PATH@"
+#define APP_APP_PATH "@APP_INSTALL_PATH@/app"
+#define APP_BIN_PATH "@APP_INSTALL_PATH@/bin"
+
+#endif

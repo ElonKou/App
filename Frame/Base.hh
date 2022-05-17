@@ -2,19 +2,21 @@
 #ifndef BASE_HH_
 #define BASE_HH_
 
-#include "../3rdparty/cppbase/cpptools.hpp"
-#include "../3rdparty/cppbase/cpptypes.hpp"
+#include "AppConfig.hh"
+#include "cpptools.hpp"
+#include "cpptypes.hpp"
 #include "imgui.h"
-#include "../3rdparty/imgui/imgui_app_extension.h"
-#include "../3rdparty/imgui/imgui_app_tools.h"
-#include "../3rdparty/imgui/imgui_app_widgets.h"
-#include "../3rdparty/imgui/imgui_impl_glfw.h"
-#include "../3rdparty/imgui/imgui_impl_opengl3.h"
-#include "../3rdparty/imgui/imgui_internal.h"
+#include "imgui_app_extension.h"
+#include "imgui_app_tools.h"
+#include "imgui_app_widgets.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_internal.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <functional>
 #include <iostream>
-#include "AppConfig.hh"
+#include <memory>
 
 using namespace cpptypes;
 
@@ -25,6 +27,6 @@ class Base {
     ~Base() {}
 };
 
-extern class MainViewport* viewport; // viewport of openGL window.
+// extern class Application* app; // viewport of openGL window.
 
 #endif

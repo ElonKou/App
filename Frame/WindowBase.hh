@@ -12,7 +12,7 @@ class WindowBase : public Base {
 
     virtual void Show() = 0;
 
-    void showHelpMarker(const string dsec) {
+    void showHelpMarker(const std::string dsec) {
         ImGui::TextDisabled("(?)");
         if (ImGui::IsItemHovered()) {
             ImGui::BeginTooltip();

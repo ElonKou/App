@@ -2,56 +2,67 @@
 #ifndef MAIN_WINDOW_HH_
 #define MAIN_WINDOW_HH_
 
-#include "Menu.hh"
 #include "WindowBase.hh"
 
-using namespace std;
+class Application;
 
-class MainViewport : public WindowBase {
+class WindowInfo {
+  public:
+    int         width;
+    int         height;
+    float       font_size;
+    std::string title;
+    std::string author;
+    std::string version;
+    std::string fonts_path;
+    ImVec4      bgcolor;
+    WindowInfo() {
+        width      = 1280;
+        height     = 720;
+        font_size  = 18.0f;
+        title      = "SomeAppDemo";
+        author     = "elonkou";
+        version    = "v0.0.1";
+        fonts_path = APP_INSTALL_PATH "/resources/fonts/YaHei.Consolas.1.12.ttf";
+        bgcolor    = ImVec4(0.12, 0.12, 0.12, 1.0);
+    }
+    ~WindowInfo() {}
+};
+
+class MainViewport {
   public:
     GLFWwindow* window;
-
-    Menu* menu;
-
-    struct WindowInfo {
-        int width;
-
-        int height;
-
-        float font_size;
-
-        string title;
-
-        string fonts_path;
-
-        ImVec4 bgcolor;
-    } win_info;
+    WindowInfo  winfo;     // windows information.
+    bool        isrunning; // target for mainviewport running flag.
 
     MainViewport();
 
+    MainViewport(WindowInfo& winfo);
+
     ~MainViewport();
 
+    void StartWindow(Application& app);
+
+    void SetDarkTheme();
+
+    void SetWhiteTheme();
+
+    void TerminateWindow();
+
+  private:
     GLFWwindow* InitWindow();
 
-    virtual void Show();
+    void SetCallback(Application& app);
 
-    void StartWindow();
+    void SetGL();
 
-    void SetGL(GLFWwindow* window);
-
-    void SetIcon(GLFWwindow* window);
+    void SetIcon();
 
     void LoadFont();
 
     void ShowDcokSpace();
 
     void ShowDisabledMessage();
-
-    void SetDarkTheme();
-
-    void SetWhiteTheme();
-
-    static void OnKeyBack(GLFWwindow* window, int key, int scanmode, int key_action, int mode);
 };
 
 #endif

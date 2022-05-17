@@ -6,14 +6,12 @@
 *  Date     : Mon May 16 01:23:07 2022
 ================================================================*/
 
-#include <iostream>
-#include "Lab.hh"
+#include "AppDemo.hh"
 
-using namespace std;
 
 int main(int argc, char* argv[]) {
-    Lab lab;
-    lab.InitLab();
-    lab.Run();
+    AppDemo demo;
+    demo.InitApp();
+    demo.RunApp();
     return 0;
 }

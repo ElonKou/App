@@ -8,7 +8,9 @@
 
 #include "Menu.hh"
 
-Menu::Menu() {}
+Menu::Menu() {
+    show_demo = false;
+}
 
 Menu::~Menu() {
     std::cout << "destructor Menu" << std::endl;
@@ -63,23 +65,16 @@ void Menu::Show() {
         }
     }
 
-    // if (ImGui::BeginMenu("Theme")) {
-    //     if (ImGui::MenuItem("Dark theme")) {
-    //         viewport->SetDarkTheme();
-    //     }
-    //     if (ImGui::MenuItem("Light theme")) {
-    //         viewport->SetWhiteTheme();
-    //     }
-    //     if (ImGui::MenuItem("Github theme")) {
-    //     }
-    //     ImGui::EndMenu();
-    // }
     if (ImGui::BeginMenu("help")) {
-        if (ImGui::MenuItem("Simple")) {
+        if (ImGui::MenuItem("SimpleDemo", "CTRL+D", &show_demo)) {
         }
         ImGui::SameLine();
         showHelpMarker("This is a simple text for help.");
         ImGui::EndMenu();
     }
     ImGui::EndMainMenuBar();
+
+    if (show_demo) {
+        ImGui::ShowDemoWindow();
+    }
 }

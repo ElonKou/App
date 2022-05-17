@@ -5,8 +5,8 @@ add_definitions(-std=c++11 -Wall -Wformat)
 file(GLOB APP_SRC "3rdparty/cppbase/*.hpp")
 file(GLOB APP_SRC "3rdparty/imgui/*.cpp")
 aux_source_directory(Frame APP_SRC)
+aux_source_directory(Demo APP_SRC)
 
-MESSAGE(${APP_SRC})
 
 include_directories(
     include
@@ -14,6 +14,7 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/3rdparty/imgui
     ${PROJECT_SOURCE_DIR}/3rdparty/stb
     ${PROJECT_SOURCE_DIR}/Frame
+    ${PROJECT_SOURCE_DIR}/Demo
 )
 
 # [config]

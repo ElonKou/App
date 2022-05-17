@@ -5,6 +5,9 @@
 #include "WindowBase.hh"
 
 class Menu : public WindowBase {
+  private:
+    bool show_demo;
+
   public:
     Menu();
 

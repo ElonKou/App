@@ -7,24 +7,21 @@
 ================================================================*/
 
 #include "MainViewport.hh"
+#include "Application.hh"
 #include "imgui_app_tools.h"
 
 MainViewport::MainViewport() {
-    win_info.fonts_path = APP_INSTALL_PATH "/resources/fonts/YaHei.Consolas.1.12.ttf";
-    win_info.font_size  = 18.0f;
-    win_info.bgcolor    = ImVec4(0.12, 0.12, 0.12, 1.0);
+    window    = InitWindow();
+    isrunning = true;
+}
 
-    window = InitWindow();
-    LoadFont();
-    SetGL(window);
-    SetDarkTheme();
-    menu = new Menu();
+MainViewport::MainViewport(WindowInfo& winfo_) {
+    winfo     = winfo_;
+    window    = InitWindow();
+    isrunning = true;
 }
 
 MainViewport::~MainViewport() {
-    if (menu) {
-        delete menu;
-    }
     std::cout << "destructor MainViewport" << std::endl;
 }
 
@@ -46,38 +43,46 @@ GLFWwindow* MainViewport::InitWindow() {
     // glDisable(GL_MULTISAMPLE);
 #endif
 
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "App " APP_VERSION " © elonkou", NULL, NULL);
+    std::string title  = winfo.title + " " + winfo.version + " © " + winfo.author;
+    GLFWwindow* window = glfwCreateWindow(winfo.width, winfo.height, title.c_str(), NULL, NULL);
 
-    SetIcon(window);
+    SetIcon();
     glfwMakeContextCurrent(window);
-    glfwSetKeyCallback(window, OnKeyBack);
+
     glewExperimental = GL_TRUE;
     glewInit();
     int height, width;
     glfwGetFramebufferSize(window, &width, &height);
     glViewport(0, 0, width, height);
+
     return window;
 }
 
-void MainViewport::Show() {
-    ShowDcokSpace();
-    if (menu) {
-        menu->Show();
-    }
-    // if (manager->options.show_program_window) {
-    //     modules_window->Show();
-    // }
-    // manager->UpdateModule();
-}
+void MainViewport::StartWindow(Application& app) {
+    LoadFont();
+    SetCallback(app);
+    SetGL();
+    SetDarkTheme();
 
-void MainViewport::StartWindow() {
-    while (!glfwWindowShouldClose(window)) {
+    isrunning = true;
+
+    glewExperimental = GL_TRUE;
+    glewInit();
+    int height, width;
+    glfwGetFramebufferSize(window, &width, &height);
+    glViewport(0, 0, width, height);
+
+    while (!glfwWindowShouldClose(window) && isrunning) {
         glClear(GL_COLOR_BUFFER_BIT);
         glfwPollEvents();
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-        Show();
+
+        // display and update
+        ShowDcokSpace();
+        app.UpdateApp();
+
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(window);
@@ -87,27 +92,54 @@ void MainViewport::StartWindow() {
     glfwTerminate();
 }
 
-void MainViewport::SetGL(GLFWwindow* window) {
-    glClearColor(win_info.bgcolor.x, win_info.bgcolor.y, win_info.bgcolor.z, win_info.bgcolor.z);
+void MainViewport::SetCallback(Application& app) {
+    // // Set all callback function.
+    glfwSetWindowUserPointer(window, (void*)&app);
+    auto keyfunc = [](GLFWwindow* window, int key, int scanmode, int key_action, int mode) {
+        static_cast<Application*>(glfwGetWindowUserPointer(window))->KeyCallbackFunc(window, key, scanmode, key_action, mode);
+    };
+    glfwSetKeyCallback(window, keyfunc);
+
+    glfwSetWindowUserPointer(window, (void*)&app);
+    auto mousefunc = [](GLFWwindow* window, int bt, int action, int mode) {
+        static_cast<Application*>(glfwGetWindowUserPointer(window))->MouseCallbackFunc(window, bt, action, mode);
+    };
+    glfwSetMouseButtonCallback(window, mousefunc);
+
+    glfwSetWindowUserPointer(window, (void*)&app);
+    auto scrollfunc = [](GLFWwindow* window, double x, double y) {
+        static_cast<Application*>(glfwGetWindowUserPointer(window))->ScrollCallback(window, x, y);
+    };
+    glfwSetScrollCallback(window, scrollfunc);
+
+    glfwSetWindowUserPointer(window, &app);
+    auto keyposfunc = [](GLFWwindow* window, double x, double y) {
+        static_cast<Application*>(glfwGetWindowUserPointer(window))->MousePositionCallback(window, x, y);
+    };
+    glfwSetCursorPosCallback(window, keyposfunc);
+}
+
+void MainViewport::SetGL() {
+    glClearColor(winfo.bgcolor.x, winfo.bgcolor.y, winfo.bgcolor.z, winfo.bgcolor.z);
     const char* glsl_version = "#version 150";
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
 }
 
-void MainViewport::SetIcon(GLFWwindow* window_) {
+void MainViewport::SetIcon() {
 #if GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3200
     /* The function glfwSetWindowIcon only display icon on verison 3.2+. */
-    GLFWimage images[2];
-    int       iw, ih;
-    string    icon_path       = APP_INSTALL_PATH "/resources/icons/icon.png";
-    string    icon_small_path = APP_INSTALL_PATH "/resources/icons/icon_small.png";
-    images[0].pixels          = stbi_load(icon_path.c_str(), &iw, &ih, NULL, 4);
-    images[0].width           = iw;
-    images[0].height          = ih;
-    images[1].pixels          = stbi_load(icon_small_path.c_str(), &iw, &ih, NULL, 4);
-    images[1].width           = iw;
-    images[1].height          = ih;
-    glfwSetWindowIcon(window_, 2, images);
+    GLFWimage   images[2];
+    int         iw, ih;
+    std::string icon_path       = APP_INSTALL_PATH "/resources/icons/icon.png";
+    std::string icon_small_path = APP_INSTALL_PATH "/resources/icons/icon_small.png";
+    images[0].pixels            = stbi_load(icon_path.c_str(), &iw, &ih, NULL, 4);
+    images[0].width             = iw;
+    images[0].height            = ih;
+    images[1].pixels            = stbi_load(icon_small_path.c_str(), &iw, &ih, NULL, 4);
+    images[1].width             = iw;
+    images[1].height            = ih;
+    glfwSetWindowIcon(window, 2, images);
     stbi_image_free(images[0].pixels);
     stbi_image_free(images[1].pixels);
 #endif
@@ -120,8 +152,8 @@ void MainViewport::LoadFont() {
     io.LogFilename = APP_INSTALL_PATH "/resources/imgui_log.txt";
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     (void)io;
-    // std::cout << win_info.fonts_path << std::endl;
-    io.Fonts->AddFontFromFileTTF(win_info.fonts_path.c_str(), win_info.font_size, NULL, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
+    // std::cout << winfo.fonts_path << std::endl;
+    io.Fonts->AddFontFromFileTTF(winfo.fonts_path.c_str(), winfo.font_size, NULL, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
     // io.Fonts->Fonts[0]->DisplayOffset = ImVec2(0, -1);
 }
 
@@ -273,6 +305,10 @@ void MainViewport::SetWhiteTheme() {
     colors[ImGuiCol_ModalWindowDimBg]      = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
 }
 
+void MainViewport::TerminateWindow() {
+    isrunning = false;
+}
+
 void MainViewport::ShowDcokSpace() {
     static bool opt_fullscreen_persistant = true;
     bool        opt_fullscreen            = opt_fullscreen_persistant;
@@ -321,16 +357,4 @@ void MainViewport::ShowDisabledMessage() {
     ImGui::SameLine(0.0f, 0.0f);
     if (ImGui::SmallButton("click here"))
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-}
-
-void MainViewport::OnKeyBack(GLFWwindow* window, int key, int scanmode, int key_action, int mode) {
-    if (key == GLFW_KEY_ESCAPE && key_action == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, GL_TRUE);
-    }
-    // if (key == GLFW_KEY_C && key_action == GLFW_PRESS) {
-    //     show_control_window = !show_control_window;
-    // }
-    // if (key == GLFW_KEY_D && key_action == GLFW_PRESS) {
-    //     show_display_window = !show_display_window;
-    // }
 }

@@ -8,12 +8,6 @@
 
 #include "AppDemo.hh"
 
-AppDemo::AppDemo() {
-}
-
-AppDemo::~AppDemo() {
-}
-
 void AppDemo::MousePositionCallback(GLFWwindow* window, double x, double y) {
     // std::cout << x << " " << y << std::endl;
 }

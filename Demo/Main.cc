@@ -7,21 +7,12 @@
 ================================================================*/
 
 #include "AppDemo.hh"
-#include "SimpleImage.hh"
+#include "ViewDemo.hh"
 
 int main(int argc, char* argv[]) {
-    AppDemo demo;
+    // AppDemo demo;
+    ViewDemo demo;
     demo.InitApp();
     demo.RunApp();
-
-    // unsigned char  cc[3] = {0, 100, 102};
-    // unsigned char* dd    = cc;
-    // std::cout << sizeof(unsigned char) << std::endl;
-    // std::cout << sizeof(unsigned char*) << std::endl;
-    // std::cout << dd << std::endl;
-    // std::cout << (void*)cc << std::endl;
-    // std::cout << cc[0] << std::endl;
-    // std::cout << cc[1] << std::endl;
-    // std::cout << cc[2] << std::endl;
     return 0;
 }

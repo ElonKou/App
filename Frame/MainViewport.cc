@@ -31,12 +31,13 @@ GLFWwindow* MainViewport::InitWindow() {
 #if defined(__APPLE__)
     // GL 3.2 + GLSL 150
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // 3.2+ only
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);           // Required on Mac
+    glfwWindowHint(GLFW_SAMPLES, 4);
 #else
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     // glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
     // glfwWindowHint(GLFW_SAMPLES, 4);
     // glEnable(GL_MULTISAMPLE);
@@ -55,6 +56,7 @@ GLFWwindow* MainViewport::InitWindow() {
     glfwGetFramebufferSize(window, &width, &height);
     glViewport(0, 0, width, height);
 
+    
     return window;
 }
 
@@ -63,6 +65,7 @@ void MainViewport::StartWindow(Application& app) {
     SetCallback(app);
     SetGL();
     SetDarkTheme();
+    glEnable(GL_DEPTH_TEST);
 
     isrunning = true;
 
@@ -73,18 +76,20 @@ void MainViewport::StartWindow(Application& app) {
     glViewport(0, 0, width, height);
 
     while (!glfwWindowShouldClose(window) && isrunning) {
-        glClear(GL_COLOR_BUFFER_BIT);
-        glfwPollEvents();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        // display and update
         ShowDcokSpace();
+
+        // display and update
         app.UpdateApp();
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        glfwPollEvents();
         glfwSwapBuffers(window);
     }
     ImGui_ImplGlfw_Shutdown();

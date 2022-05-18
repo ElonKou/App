@@ -16,6 +16,12 @@ Application::~Application() {
     std::cout << "destructor Application" << std::endl;
 }
 
+void Application::CloseMouse() {
+    if (m_viewport) {
+        glfwSetInputMode(m_viewport->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
+}
+
 void Application::KeyCallbackFunc(GLFWwindow* window, int key, int scanmode, int key_action, int mode) {
     if (key == GLFW_KEY_ESCAPE && key_action == GLFW_PRESS) {
         m_viewport->isrunning = false;

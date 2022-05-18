@@ -14,9 +14,17 @@
 #include "imgui_internal.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <cmath>
 #include <functional>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/quaternion.hpp>
 #include <iostream>
 #include <memory>
+#include <numeric>
+#include <string>
+#include <vector>
 
 using namespace cpptypes;
 

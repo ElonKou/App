@@ -1,9 +1,10 @@
 #ifndef APP_CONFIG_HH_
 #define APP_CONFIG_HH_
 
-#define APP_VERSION "v0.0.1"
+#define APP_VERSION "v0.1.3"
 #define APP_INSTALL_PATH "/Users/elonkou/FILE/TOOLS/App"
-#define APP_APP_PATH "/Users/elonkou/FILE/TOOLS/App/app"
 #define APP_BIN_PATH "/Users/elonkou/FILE/TOOLS/App/bin"
+#define APP_RESOURCES_PATH "/Users/elonkou/FILE/TOOLS/App/resources"
+#define APP_SHADERS_PATH "/Users/elonkou/FILE/TOOLS/App/shaders"
 
 #endif

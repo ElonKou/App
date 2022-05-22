@@ -11,7 +11,7 @@
 Scene::Scene() {
     draw_coord = true;
     shader     = new Shader({APP_SHADERS_PATH "/demo_vertex.vs", APP_SHADERS_PATH "/demo_frag.fs"});
-    texture    = new Texture(APP_RESOURCES_PATH "/images/OIP-C.jpeg");
+    texture    = new Texture(APP_RESOURCES_PATH "/images/gESgL.jpeg");
     texture->Bind();
 
     // Coord init.

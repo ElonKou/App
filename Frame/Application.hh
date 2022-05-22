@@ -13,7 +13,8 @@ class Application {
 
     ~Application();
 
-    void         CloseMouse();
+    void CloseMouse();
+
     virtual void KeyCallbackFunc(GLFWwindow* window, int key, int scanmode, int action, int mode);
 
     virtual void MouseCallbackFunc(GLFWwindow* window, int bt, int action, int mode);

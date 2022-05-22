@@ -8,16 +8,6 @@
 
 #include "ViewDemo.hh"
 
-void ViewDemo::CreateScene() {
-    cam        = std::make_shared<Camera>();
-    scene      = std::make_shared<Scene>();
-    box        = std::make_shared<Mesh>();
-    *box.get() = GetBox();
-
-    scene->AddObj(box.get());
-    CloseMouse();
-}
-
 void ViewDemo::KeyCallbackFunc(GLFWwindow* window, int key, int scanmode, int action, int mode) {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         // std::cout << "key: " << key << " scan: " << scan << " acction: " << action << " mode: " << mode << std::endl;
@@ -44,14 +34,22 @@ void ViewDemo::MousePositionCallback(GLFWwindow* window, double x, double y) {
 }
 
 void ViewDemo::InitApp() {
-    info.title  = "3DViewDemo";
-    info.author = "elonkou";
-    m_viewport  = std::make_shared<MainViewport>(info);
-    menu        = std::make_shared<Menu>();
-    cwin        = std::make_shared<ControlWindow>();
-    dwin        = std::make_shared<DisplyWindow>();
+    info.title   = "3DViewDemo";
+    info.author  = "elonkou";
+    info.version = APP_VERSION;
 
-    CreateScene();
+    m_viewport = std::make_shared<MainViewport>(info);
+    menu       = std::make_shared<Menu>();
+    cwin       = std::make_shared<ControlWindow>();
+    dwin       = std::make_shared<DisplyWindow>();
+    owin       = std::make_shared<OpenGLWindow>();
+
+    cam        = std::make_shared<Camera>();
+    scene      = std::make_shared<Scene>();
+    box        = std::make_shared<Mesh>();
+    *box.get() = GetBox();
+    scene->AddObj(box.get());
+    // CloseMouse();
 }
 
 void ViewDemo::UpdateApp() {
@@ -66,14 +64,16 @@ void ViewDemo::UpdateApp() {
     }
 
     glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
-    cam->cam_width     = m_viewport->winfo.width;
-    cam->cam_height    = m_viewport->winfo.height;
     cam->ProcessInput(m_viewport->window);
     scene->CameraUpdate(*cam.get());
 
-    box->scale      = glm::vec3(0.1);
+    box->scale      = glm::vec3(0.5);
     box->rotation.x = glfwGetTime();
     box->rotation.y = glfwGetTime();
     box->pos        = position;
-    scene->Draw(*cam.get());
+
+    if (owin) {
+        owin->SetSceneCamera(scene, cam);
+        owin->Show();
+    }
 }

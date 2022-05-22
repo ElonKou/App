@@ -9,7 +9,7 @@ class DisplyWindow : public WindowBase {
 
   public:
     DisplyWindow() {
-        std::string path = APP_INSTALL_PATH "/resources/images/OIP-C.jpeg";
+        std::string path = APP_INSTALL_PATH "/resources/images/gESgL.jpeg";
         img              = std::make_shared<SimpleImage>(path);
     }
 
@@ -24,7 +24,7 @@ class DisplyWindow : public WindowBase {
             ImGui::Image((void*)(intptr_t)img->img_id, img->size, uv_min, uv_max, tint_col, border_col);
 
             if (ImGui::Button("change")) {
-                for (size_t i = 0; i < 1024 * 100; i++) {
+                for (size_t i = 0; i < 1024 * 50; i++) {
                     img->data[i * 4 + 3] = 10;
                 }
                 img->Upload();

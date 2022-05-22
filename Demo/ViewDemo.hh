@@ -6,6 +6,7 @@
 #include "DisplayWindow.hh"
 #include "Menu.hh"
 #include "Mesh.hh"
+#include "OpenGLWindow.hh"
 #include "Scene.hh"
 
 class ViewDemo : public Application {
@@ -13,12 +14,11 @@ class ViewDemo : public Application {
     std::shared_ptr<Menu>          menu;
     std::shared_ptr<ControlWindow> cwin;
     std::shared_ptr<DisplyWindow>  dwin;
+    std::shared_ptr<OpenGLWindow>  owin;
 
     std::shared_ptr<Scene>  scene;
     std::shared_ptr<Camera> cam;
     std::shared_ptr<Mesh>   box;
-
-    void CreateScene();
 
   public:
     ViewDemo() {}

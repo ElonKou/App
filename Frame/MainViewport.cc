@@ -56,7 +56,6 @@ GLFWwindow* MainViewport::InitWindow() {
     glfwGetFramebufferSize(window, &width, &height);
     glViewport(0, 0, width, height);
 
-    
     return window;
 }
 

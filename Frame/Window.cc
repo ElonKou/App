@@ -119,10 +119,6 @@ void Window::Terminate() {
     glfwTerminate();
 }
 
-void Window::CloseMouse() {
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-}
-
 // --------------------------------------------------Callback functions----------------------------------------------------------------
 void Window::MouseCallbackFunc(GLFWwindow* window, int button, int action, int mode) {
     // std::cout << "button: " << button << " acction: " << action << " mode: " << mode << std::endl;

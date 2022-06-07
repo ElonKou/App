@@ -10,6 +10,7 @@ class WindowBase : public Base {
 
     virtual ~WindowBase() {}
 
+    // draw element.
     virtual void Show() = 0;
 
     void showHelpMarker(const std::string dsec) {

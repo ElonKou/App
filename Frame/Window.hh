@@ -20,7 +20,6 @@ class Window {
     void SetInterval(int frame_rate); // set internale time.
     void Clear();                     // use clear color clear window.
     void Terminate();                 // terminate window/
-    void CloseMouse();                // Close mouse display.
 
     void MouseCallbackFunc(GLFWwindow* window, int button, int action, int mode);
 

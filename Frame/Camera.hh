@@ -28,6 +28,12 @@ class Camera {
     float deltaTime; // last and current frame's delta time.
     float lastFrame; // record last frame render time.
 
+    // control int 3Dview.
+    glm::vec2 st;           // start position.
+    glm::vec2 end;          // end position.
+    glm::vec2 mouse_pos;    // mouse position.
+    bool      ctrl_pressed; // whether crrl is pressed.
+
     Camera();
 
     ~Camera();
@@ -47,4 +53,6 @@ class Camera {
     void mouse_move_callback(GLFWwindow* window, double xpos, double ypos);
 
     void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
+    bool InRange();
 };

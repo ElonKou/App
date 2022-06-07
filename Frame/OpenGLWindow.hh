@@ -8,7 +8,6 @@
 class OpenGLWindow : public WindowBase {
   private:
     std::shared_ptr<Scene>       scene;
-    std::shared_ptr<Camera>      cam;
     std::shared_ptr<FrameBuffer> fbuffer;
     bool                         ret; // whether update.
 
@@ -19,8 +18,7 @@ class OpenGLWindow : public WindowBase {
 
     virtual void Show();
 
-    inline void SetSceneCamera(std::shared_ptr<Scene> scene_, std::shared_ptr<Camera> cam_) {
+    inline void SetScene(std::shared_ptr<Scene> scene_) {
         scene = scene_;
-        cam   = cam_;
     }
 };

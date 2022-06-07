@@ -20,13 +20,19 @@ Camera::Camera() {
     // Default FPS camera values
     yaw     = -90.0f;
     pitch   = 0.0f;
-    speed   = 2.0f;
-    sensity = 0.06f;
+    speed   = 2.5f;
+    sensity = 0.16f;
     zoom    = 45.0f;
 
     deltaTime  = 0.0f; // last and current frame's delta time.
     lastFrame  = 0.0f; // record last frame render time.
     firstMouse = true;
+
+    // control 3D window.
+    st           = glm::vec2(0, 0);             // process range.
+    end          = glm::vec2(INT_MAX, INT_MAX); // process range.
+    mouse_pos    = glm::vec2(0, 0);
+    ctrl_pressed = false;
 }
 
 Camera::~Camera() {
@@ -52,6 +58,9 @@ glm::mat4 Camera::GetRenderMatrix(int w_width, int w_height) {
 }
 
 void Camera::ProcessInput(GLFWwindow* window) {
+    if (!InRange())
+        return;
+
     float currentFrame = glfwGetTime();
     deltaTime          = currentFrame - lastFrame;
     lastFrame          = currentFrame;
@@ -78,8 +87,11 @@ void Camera::ProcessInput(GLFWwindow* window) {
 }
 
 void Camera::mouse_click_callback(GLFWwindow* window, int button, int action, int mode) {
-    // click
-    std::cout << "button: " << button << " acction: " << action << " mode: " << mode << std::endl;
+    if (button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS) {
+        ctrl_pressed = true;
+    } else {
+        ctrl_pressed = false;
+    }
 }
 
 void Camera::mouse_move_callback(GLFWwindow* window, double xpos, double ypos) {
@@ -93,6 +105,10 @@ void Camera::mouse_move_callback(GLFWwindow* window, double xpos, double ypos) {
     float yoffset = lastY - ypos;
     lastX         = xpos;
     lastY         = ypos;
+
+    mouse_pos = glm::vec2(xpos, ypos);
+    if (!InRange() || !ctrl_pressed)
+        return;
 
     xoffset = xoffset * sensity;
     yoffset = yoffset * sensity;
@@ -113,6 +129,9 @@ void Camera::mouse_move_callback(GLFWwindow* window, double xpos, double ypos) {
 }
 
 void Camera::scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+    if (!InRange())
+        return;
+
     zoom -= (float)yoffset;
     if (zoom < 1.0f) {
         zoom = 1.0f;
@@ -120,4 +139,11 @@ void Camera::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
     if (zoom > 150.0f) {
         zoom = 150.0f;
     }
+}
+
+bool Camera::InRange() {
+    // check mouse position whetehr in the window range.
+    if (mouse_pos.x < st.x || mouse_pos.x > end.x || mouse_pos.y < st.y || mouse_pos.y > end.y)
+        return false;
+    return true;
 }

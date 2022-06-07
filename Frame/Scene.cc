@@ -14,6 +14,8 @@ Scene::Scene() {
     texture    = new Texture(APP_RESOURCES_PATH "/images/gESgL.jpeg");
     texture->Bind();
 
+    cam = std::make_shared<Camera>();
+
     // Coord init.
     coord.Init();
 }
@@ -38,19 +40,14 @@ void Scene::AddObj(Mesh* obj) {
     objs.push_back(obj);
 }
 
-void Scene::CameraUpdate(Camera &cam) {
-    glm::mat4 render = cam.GetRenderMatrix(cam.cam_width, cam.cam_height);
-    coord.CameraUpdate(render);
-}
-
-void Scene::Draw(Camera &cam) {
+void Scene::Draw() {
+    glm::mat4 render = cam->GetRenderMatrix(cam->cam_width, cam->cam_height);
     for (size_t i = 0; i < objs.size(); i++) {
         glm::mat4 model = objs[i]->GetModelMatrix();
         if (!objs[i]->shader) {
             objs[i]->shader = shader;
         }
         objs[i]->shader->Use();
-        glm::mat4 render = cam.GetRenderMatrix(cam.cam_width, cam.cam_height);
         objs[i]->shader->SetMat4f("renderMat", render);
         objs[i]->shader->SetMat4f("model", model);
         if (objs[i]->texture) {
@@ -61,6 +58,11 @@ void Scene::Draw(Camera &cam) {
         objs[i]->Draw();
     }
     if (draw_coord) {
+        coord.CameraUpdate(render);
         coord.Draw();
     }
+}
+
+void Scene::ProcessInput(GLFWwindow* window) {
+    cam->ProcessInput(window);
 }

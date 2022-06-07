@@ -56,7 +56,7 @@ void Coord::Init() {
 }
 
 void Coord::Draw() {
-    float     col     = 0.8;
+    float     col = 0.8;
     glm::mat4 model;
     glm::vec3 mycolor;
 
@@ -83,7 +83,7 @@ void Coord::Draw() {
 
     grid_pyramid.rotation = glm::vec3(0.0, 0.0, 0.0);
     grid_pyramid.pos      = glm::vec3(0.0, 0.0, grid_range / 2.0);
-    grid_pyramid.scale    = glm::vec3(0.02, 0.02, 0.04);
+    grid_pyramid.scale    = glm::vec3(0.03, 0.03, 0.06);
     model                 = grid_pyramid.GetModelMatrix();
     grid_pyramid.shader->Use();
     grid_pyramid.shader->SetMat4f("model", model);
@@ -108,7 +108,7 @@ void Coord::Draw() {
 
     grid_pyramid.rotation = glm::vec3(0.0, glm::radians(90.0), 0.0);
     grid_pyramid.pos      = glm::vec3(grid_range / 2.0, 0.0, 0.0);
-    grid_pyramid.scale    = glm::vec3(0.02, 0.02, 0.04);
+    grid_pyramid.scale    = glm::vec3(0.03, 0.03, 0.06);
     model                 = grid_pyramid.GetModelMatrix();
     grid_pyramid.shader->Use();
     grid_pyramid.shader->SetMat4f("model", model);
@@ -131,9 +131,9 @@ void Coord::Draw() {
     grid_box.shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
     grid_box.Draw();
 
-    grid_pyramid.rotation = glm::vec3(glm::radians(90.0), 0.0, 0.0);
+    grid_pyramid.rotation = glm::vec3(glm::radians(-90.0), 0.0, 0.0);
     grid_pyramid.pos      = glm::vec3(0.0, grid_range / 2.0, 0.0);
-    grid_pyramid.scale    = glm::vec3(0.02, 0.02, 0.04);
+    grid_pyramid.scale    = glm::vec3(0.03, 0.03, 0.06);
     model                 = grid_pyramid.GetModelMatrix();
     grid_pyramid.shader->Use();
     grid_pyramid.shader->SetMat4f("model", model);

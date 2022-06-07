@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Camera.hh"
 #include "Coord.hh"
 #include "Mesh.hh"
 #include "Shader.hh"
@@ -8,10 +9,12 @@
 
 class Scene {
   public:
-    Texture*           texture; // default Txxture;
+    Texture*           texture; // default texture.
     Shader*            shader;  // store the render shader.
     std::vector<Mesh*> objs;    // contains all Mesh objects.
     Coord              coord;   // Coord with axis.
+
+    std::shared_ptr<Camera> cam; // 3D camera.
 
     bool draw_coord; // whether draw coord.
 
@@ -24,7 +27,7 @@ class Scene {
      */
     void AddObj(Mesh* obj);
 
-    void CameraUpdate(Camera& cam); // check camera update.
+    void Draw();
 
-    void Draw(Camera& cam);
+    void ProcessInput(GLFWwindow* window);
 };

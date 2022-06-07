@@ -16,20 +16,20 @@ void ViewDemo::KeyCallbackFunc(GLFWwindow* window, int key, int scanmode, int ac
 }
 
 void ViewDemo::MouseCallbackFunc(GLFWwindow* window, int bt, int action, int mode) {
-    if (cam) {
-        cam->mouse_click_callback(window, bt, action, mode);
+    if (scene) {
+        scene->cam->mouse_click_callback(window, bt, action, mode);
     }
 }
 
 void ViewDemo::ScrollCallback(GLFWwindow* window, double x, double y) {
-    if (cam) {
-        cam->scroll_callback(window, x, y);
+    if (scene) {
+        scene->cam->scroll_callback(window, x, y);
     }
 }
 
 void ViewDemo::MousePositionCallback(GLFWwindow* window, double x, double y) {
-    if (cam) {
-        cam->mouse_move_callback(window, x, y);
+    if (scene) {
+        scene->cam->mouse_move_callback(window, x, y);
     }
 }
 
@@ -44,15 +44,23 @@ void ViewDemo::InitApp() {
     dwin       = std::make_shared<DisplyWindow>();
     owin       = std::make_shared<OpenGLWindow>();
 
-    cam        = std::make_shared<Camera>();
     scene      = std::make_shared<Scene>();
     box        = std::make_shared<Mesh>();
     *box.get() = GetBox();
     scene->AddObj(box.get());
-    // CloseMouse();
+
+    owin->SetScene(scene);
 }
 
 void ViewDemo::UpdateApp() {
+    glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
+    scene->ProcessInput(m_viewport->window);
+
+    box->scale      = glm::vec3(0.5);
+    box->rotation.x = glfwGetTime();
+    box->rotation.y = glfwGetTime();
+    box->pos        = position;
+
     if (menu) {
         menu->Show();
     }
@@ -62,18 +70,8 @@ void ViewDemo::UpdateApp() {
     if (dwin) {
         dwin->Show();
     }
-
-    glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
-    cam->ProcessInput(m_viewport->window);
-    scene->CameraUpdate(*cam.get());
-
-    box->scale      = glm::vec3(0.5);
-    box->rotation.x = glfwGetTime();
-    box->rotation.y = glfwGetTime();
-    box->pos        = position;
-
     if (owin) {
-        owin->SetSceneCamera(scene, cam);
+        // owin->ProcessInput();
         owin->Show();
     }
 }

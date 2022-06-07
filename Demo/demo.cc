@@ -18,7 +18,6 @@ int xx(int argc, char* argv[]) {
     Mesh   planeB  = GetRectWithCoord();
     Mesh   planeC  = GetRectWithCoord();
     Mesh   ptramid = GetPyramid();
-    Camera cam     = Camera();
 
     glm::vec3 positions[] = {
         glm::vec3(0.0f, 0.0f, 0.0f),
@@ -38,12 +37,10 @@ int xx(int argc, char* argv[]) {
     scene.AddObj(&planeC);
     scene.AddObj(&ptramid);
 
-    window.CloseMouse();
-
     while (!window.Closed()) {
         window.Clear();
-        cam.ProcessInput(window.window);
-        scene.CameraUpdate(cam);
+        scene.cam->ProcessInput(window.window);
+        scene.ProcessInput(window.window);
 
         planeA.scale    = glm::vec3(1.0f);
         planeB.scale    = glm::vec3(1.0f);
@@ -55,7 +52,7 @@ int xx(int argc, char* argv[]) {
         box.rotation.y  = glfwGetTime();
         ptramid.pos     = positions[2];
 
-        scene.Draw(cam);
+        scene.Draw();
 
         window.Swap();
         window.PollEvents();

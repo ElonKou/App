@@ -16,9 +16,8 @@ class ViewDemo : public Application {
     std::shared_ptr<DisplyWindow>  dwin;
     std::shared_ptr<OpenGLWindow>  owin;
 
-    std::shared_ptr<Scene>  scene;
-    std::shared_ptr<Camera> cam;
-    std::shared_ptr<Mesh>   box;
+    std::shared_ptr<Scene> scene;
+    std::shared_ptr<Mesh>  box;
 
   public:
     ViewDemo() {}

@@ -49,12 +49,15 @@ Texture::Texture(std::string filename) {
 
     channel = 4;
     stbi_set_flip_vertically_on_load(true);
-    image = stbi_load(filename.c_str(), &width, &height, NULL, 4);
+    // image = stbi_load(filename.c_str(), &width, &height, NULL, 4);
+    image = stbi_load(filename.c_str(), &width, &height, &channel, 0);
     if (!image) {
         std::cout << "ERROR load image: " << filename << std::endl;
     }
+    std::cout << "sss" << channel << std::endl;
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+    // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
     glGenerateMipmap(GL_TEXTURE_2D);
     stbi_image_free(image);
     glBindTexture(GL_TEXTURE_2D, 0);

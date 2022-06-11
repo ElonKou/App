@@ -11,21 +11,21 @@
 #include "imgui_app_tools.h"
 
 MainViewport::MainViewport() {
-    window    = InitWindow();
     isrunning = true;
+    InitWindow();
 }
 
 MainViewport::MainViewport(WindowInfo& winfo_) {
     winfo     = winfo_;
-    window    = InitWindow();
     isrunning = true;
+    InitWindow();
 }
 
 MainViewport::~MainViewport() {
     std::cout << "destructor MainViewport" << std::endl;
 }
 
-GLFWwindow* MainViewport::InitWindow() {
+void MainViewport::InitWindow() {
     glfwInit();
 
 #if defined(__APPLE__)
@@ -44,8 +44,8 @@ GLFWwindow* MainViewport::InitWindow() {
     // glDisable(GL_MULTISAMPLE);
 #endif
 
-    std::string title  = winfo.title + " " + winfo.version + " © " + winfo.author;
-    GLFWwindow* window = glfwCreateWindow(winfo.width, winfo.height, title.c_str(), NULL, NULL);
+    std::string title = winfo.title + " " + winfo.version + " © " + winfo.author;
+    window            = glfwCreateWindow(winfo.width, winfo.height, title.c_str(), NULL, NULL);
 
     SetIcon();
     glfwMakeContextCurrent(window);
@@ -55,8 +55,6 @@ GLFWwindow* MainViewport::InitWindow() {
     int height, width;
     glfwGetFramebufferSize(window, &width, &height);
     glViewport(0, 0, width, height);
-
-    return window;
 }
 
 void MainViewport::StartWindow(Application& app) {

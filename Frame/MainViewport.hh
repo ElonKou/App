@@ -41,6 +41,8 @@ class MainViewport {
 
     ~MainViewport();
 
+    void InitWindow();
+
     void StartWindow(Application& app);
 
     void SetDarkTheme();
@@ -50,8 +52,6 @@ class MainViewport {
     void TerminateWindow();
 
   private:
-    GLFWwindow* InitWindow();
-
     void SetCallback(Application& app);
 
     void SetGL();

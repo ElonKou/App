@@ -2,21 +2,25 @@
 
 #include "Camera.hh"
 #include "Coord.hh"
-#include "Mesh.hh"
+#include "iMesh.hh"
 #include "Shader.hh"
 #include "Texture.hh"
 #include "Window.hh"
+#include "Model.hh"
 
 class Scene {
   public:
     Texture*           texture; // default texture.
     Shader*            shader;  // store the render shader.
-    std::vector<Mesh*> objs;    // contains all Mesh objects.
+    std::vector<iMesh*> objs;    // contains all iMesh objects.
     Coord              coord;   // Coord with axis.
 
     std::shared_ptr<Camera> cam; // 3D camera.
 
     bool draw_coord; // whether draw coord.
+
+    std::shared_ptr<Model>  our_model;
+    std::shared_ptr<Shader> our_shader;
 
     Scene();
 
@@ -25,7 +29,7 @@ class Scene {
     /**
      * add mesh obj into Scene list, and init.
      */
-    void AddObj(Mesh* obj);
+    void AddObj(iMesh* obj);
 
     void Draw();
 

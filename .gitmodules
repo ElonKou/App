@@ -1,3 +1,6 @@
 [submodule "3rdparty/cppbase"]
 	path = 3rdparty/cppbase
 	url = https://github.com/ElonKou/cppbase
+[submodule "3rdparty/assimp"]
+	path = 3rdparty/assimp
+	url = https://github.com/assimp/assimp.git

@@ -6,18 +6,18 @@
 *  Date     : Mon Feb  7 17:19:58 2022
 ================================================================*/
 
-#include "Mesh.hh"
+#include "iMesh.hh"
 #include "Scene.hh"
 #include "Window.hh"
 
 int xx(int argc, char* argv[]) {
     Window window;
     Scene  scene;
-    Mesh   box     = GetBox();
-    Mesh   planeA  = GetRectWithCoord();
-    Mesh   planeB  = GetRectWithCoord();
-    Mesh   planeC  = GetRectWithCoord();
-    Mesh   ptramid = GetPyramid();
+    iMesh   box     = GetBox();
+    iMesh   planeA  = GetRectWithCoord();
+    iMesh   planeB  = GetRectWithCoord();
+    iMesh   planeC  = GetRectWithCoord();
+    iMesh   ptramid = GetPyramid();
 
     glm::vec3 positions[] = {
         glm::vec3(0.0f, 0.0f, 0.0f),

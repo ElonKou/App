@@ -5,67 +5,49 @@
 #include "Shader.hh"
 #include "Texture.hh"
 
+#define MAX_BONE_INFLUENCE 4
 typedef struct Vertex {
-    glm::vec3 pos;    // point of vertex.
-    glm::vec3 color;  // color of vertex.
-    glm::vec3 normal; // color of vertex.
-    glm::vec2 coord;  // texture coord.
+    glm::vec3 pos;       // point of vertex.
+    glm::vec3 normal;    // normal of vertex.
+    glm::vec2 coord;     // texture coord.
+    glm::vec3 color;     // [not used] color of vertex.
+    glm::vec3 tangent;   // [not used] tangent
+    glm::vec3 bitangent; // [not used] bitangent
+
+    int   m_BoneIDs[MAX_BONE_INFLUENCE]; // bone indexes which will influence this vertex
+    float m_Weights[MAX_BONE_INFLUENCE]; // weights from each bone
 } Vertex;
 
-// TODO
+struct iTexture {
+    unsigned int id;
+    std::string  type;
+    std::string  path;
+};
+
 class Mesh {
   public:
-    bool                 withcolor; // whether with vertex color.
-    bool                 withtext;  // whether with texture coord.
-    std::vector<GLfloat> vertices;  // all vertex point.
-    std::vector<GLuint>  indices;   // all index.
-    std::vector<GLint>   format;    // format for shader read.
+    // mesh Data
+    std::vector<Vertex>       vertices;
+    std::vector<unsigned int> indices;
+    std::vector<iTexture>     textures;
+    unsigned int              VAO;
 
-    glm::vec3 pos;         // position of Mesh object.
-    glm::vec3 scale;       // scale the Mesh Object.
-    glm::vec3 rotation;    // rotation angle.
+    // default constructor
+    Mesh() {}
 
-    Buffer   buffer;
-    Texture* texture;
-    Shader*  shader;
+    // constructor
+    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<iTexture> textures);
 
-    Mesh();
+    // default deconstructor
+    ~Mesh() {}
 
-    Mesh(float radius);
+    // render the mesh
+    void Draw(Shader& shader);
 
-    ~Mesh();
+  private:
+    // render data
+    unsigned int VBO, EBO;
 
-    glm::mat4 GetModelMatrix();
-
-    void Init();
-
-    void Draw();
+    // initializes all the buffer objects/arrays
+    void setupMesh();
 };
-
-class Triangle {
-  public:
-    Triangle() {}
-
-    ~Triangle() {}
-};
-
-Mesh GetTriangle(float radius = 0.8, bool color = false, bool texture = false);
-Mesh GetRect(float radius = 0.5);
-Mesh GetRectWithCoord();
-Mesh GetRectWithTexture(float radius = 0.5);
-Mesh GetRectWithoutColor(float radius = 0.5);
-Mesh GetSphere2D(float radius = 0.5, int cnt = 24);
-Mesh GetSphere3D(float radius = 0.5, int cnt = 24);
-Mesh GetHeart(int cnt = 24);
-
-// 3D
-Mesh GetBox(float radius = 0.5);
-Mesh GetMiddleBox(float radius = 0.5);
-Mesh GetSimpleBox(float radius = 0.5);
-Mesh GetPyramid();
-Mesh GetPlane3D(int zero_id = 2);
-
-std::ostream& operator<<(std::ostream& os, glm::mat4& m);
-std::ostream& operator<<(std::ostream& os, glm::vec3& v);
-std::ostream& operator<<(std::ostream& os, glm::vec4& v);
-std::ostream& operator<<(std::ostream& os, glm::quat& q);

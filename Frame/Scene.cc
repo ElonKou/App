@@ -18,6 +18,9 @@ Scene::Scene() {
 
     // Coord init.
     coord.Init();
+
+    our_shader = std::make_shared<Shader>(APP_SHADERS_PATH "/model_loading.vs", APP_SHADERS_PATH "/model_loading.fs");
+    our_model  = std::make_shared<Model>(APP_RESOURCES_PATH "/backpack/backpack.obj");
 }
 
 Scene::~Scene() {
@@ -29,7 +32,7 @@ Scene::~Scene() {
     }
 }
 
-void Scene::AddObj(Mesh* obj) {
+void Scene::AddObj(iMesh* obj) {
     if (!obj->texture) {
         obj->texture = texture;
     }
@@ -60,6 +63,17 @@ void Scene::Draw() {
     if (draw_coord) {
         coord.CameraUpdate(render);
         coord.Draw();
+    }
+    {
+        our_shader->Use();
+
+        // view/projection transformations
+        glm::mat4 model = glm::mat4(1.0f);
+        our_shader->SetMat4f("renderMat", render);
+        our_shader->SetMat4f("model", model);
+
+        // render the loaded model
+        our_model->Draw(*our_shader.get());
     }
 }
 

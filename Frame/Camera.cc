@@ -20,7 +20,7 @@ Camera::Camera() {
     // Default FPS camera values
     yaw     = -90.0f;
     pitch   = 0.0f;
-    speed   = 2.5f;
+    speed   = 3.1f;
     sensity = 0.16f;
     zoom    = 45.0f;
 

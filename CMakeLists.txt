@@ -1,27 +1,36 @@
-project(SomeApp)
 cmake_minimum_required(VERSION 3.2)
+set(APP_VERSION 0.1.7)
+project(SomeApp VERSION ${APP_VERSION})
 add_definitions(-std=c++11 -Wall -Wformat)
 
 file(GLOB APP_SRC "3rdparty/cppbase/*.hpp")
 file(GLOB APP_SRC "3rdparty/imgui/*.cpp")
 aux_source_directory(Frame APP_SRC)
-aux_source_directory(Demo APP_SRC)
+aux_source_directory(Demo/DemoCommon APP_SRC)
+# aux_source_directory(Demo/AppDemo APP_SRC)
+aux_source_directory(Demo/View3D APP_SRC)
+# aux_source_directory(Demo/Physics2D APP_SRC)
 
+add_subdirectory(3rdparty/assimp)
 
 include_directories(
     include
     ${PROJECT_SOURCE_DIR}/3rdparty/cppbase
     ${PROJECT_SOURCE_DIR}/3rdparty/imgui
     ${PROJECT_SOURCE_DIR}/3rdparty/stb
+    ${PROJECT_SOURCE_DIR}/3rdparty/assimp
     ${PROJECT_SOURCE_DIR}/Frame
-    ${PROJECT_SOURCE_DIR}/Demo
+    ${PROJECT_SOURCE_DIR}/Demo/DemoCommon
+    # ${PROJECT_SOURCE_DIR}/Demo/AppDemo
+    ${PROJECT_SOURCE_DIR}/Demo/View3D
+    # ${PROJECT_SOURCE_DIR}/Demo/Physics2D
 )
 
 # [config]
-SET(CMAKE_BUILD_TYPE "Debug")
-SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")
-# SET(CMAKE_BUILD_TYPE "Release")
-# SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
+# SET(CMAKE_BUILD_TYPE "Debug")
+# SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")
+SET(CMAKE_BUILD_TYPE "Release")
+SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 
 # set(CMAKE_INSTALL_PREFIX /opt/App)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
@@ -47,11 +56,10 @@ configure_file(
 add_executable(SomeApp ${APP_SRC})
 
 if(APPLE)
-    target_link_libraries(SomeApp GLEW glfw "-framework OpenGL")
+    target_link_libraries(SomeApp GLEW glfw assimp "-framework OpenGL")
 elseif(UNIX)
-    target_link_libraries(SomeApp glfw dl GLEW GL)
+    target_link_libraries(SomeApp glfw assimp dl GLEW GL)
 endif()
-# add_subdirectory(modules)
 
 # [install]
 install(TARGETS ${PROJECT_NAME}

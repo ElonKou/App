@@ -11,8 +11,7 @@
 Scene::Scene() {
     draw_coord = true;
     shader     = new Shader({APP_SHADERS_PATH "/demo_vertex.vs", APP_SHADERS_PATH "/demo_frag.fs"});
-    texture    = new Texture(APP_RESOURCES_PATH "/images/gESgL.jpeg");
-    texture->Bind();
+    texture    = new Texture("gESgL.jpeg", APP_RESOURCES_PATH "/images");
 
     cam = std::make_shared<Camera>();
 
@@ -56,7 +55,7 @@ void Scene::Draw() {
         if (objs[i]->texture) {
             // set texture id for every shader according its shader id.
             objs[i]->texture->Bind();
-            objs[i]->shader->Set1i("textureid", objs[i]->texture->cur_id);
+            objs[i]->shader->Set1i("textureid", objs[i]->texture->id);
         }
         objs[i]->Draw();
     }

@@ -7,6 +7,7 @@
 #include "Base.hh"
 #include "Mesh.hh"
 #include "Shader.hh"
+#include "Texture.hh"
 
 #include <fstream>
 #include <iostream>
@@ -16,15 +17,13 @@
 #include <vector>
 using namespace std;
 
-unsigned int TextureFromFile(const char* path, const string& directory, bool gamma = false);
-
 class Model {
   public:
     // model data
-    vector<iTexture> textures_loaded; // stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
-    vector<Mesh>     meshes;          // all meshes.
-    string           directory;       // model path.
-    bool             gammaCorrection;
+    vector<Texture> textures_loaded; // stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
+    vector<Mesh>    meshes;          // all meshes.
+    string          directory;       // model path.
+    bool            gammaCorrection;
 
     // default constructor.
     Model() {}
@@ -48,8 +47,6 @@ class Model {
     Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 
     // checks all material textures of a given type and loads the textures if they're not loaded yet.
-    // the required info is returned as a iTexture struct.
-    vector<iTexture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName);
+    // the required info is returned as a Texture struct.
+    vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName);
 };
-
-unsigned int TextureFromFile(const char* path, const string& directory, bool gamma);

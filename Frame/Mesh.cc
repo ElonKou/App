@@ -8,7 +8,7 @@
 
 #include "Mesh.hh"
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<iTexture> textures) {
+Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures) {
     this->vertices = vertices;
     this->indices  = indices;
     this->textures = textures;
@@ -38,9 +38,12 @@ void Mesh::Draw(Shader& shader) {
             number = std::to_string(heightNr++); // transfer unsigned int to string
 
         // now set the sampler to the correct texture unit
-        glUniform1i(glGetUniformLocation(shader.Program, (name + number).c_str()), i);
+        // glUniform1i(glGetUniformLocation(shader.Program, (name + number).c_str()), i);
         // and finally bind the texture
-        glBindTexture(GL_TEXTURE_2D, textures[i].id);
+        // glBindTexture(GL_TEXTURE_2D, textures[i].id);
+
+        textures[i].Bind();
+        shader.Set1i(name + number, textures[i].id);
     }
 
     // draw mesh

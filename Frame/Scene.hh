@@ -2,18 +2,18 @@
 
 #include "Camera.hh"
 #include "Coord.hh"
-#include "iMesh.hh"
+#include "Model.hh"
 #include "Shader.hh"
 #include "Texture.hh"
 #include "Window.hh"
-#include "Model.hh"
+#include "iMesh.hh"
 
 class Scene {
   public:
-    Texture*           texture; // default texture.
-    Shader*            shader;  // store the render shader.
+    Texture*            texture; // default texture.
+    Shader*             shader;  // store the render shader.
     std::vector<iMesh*> objs;    // contains all iMesh objects.
-    Coord              coord;   // Coord with axis.
+    Coord               coord;   // Coord with axis.
 
     std::shared_ptr<Camera> cam; // 3D camera.
 

@@ -18,25 +18,19 @@ typedef struct Vertex {
     float m_Weights[MAX_BONE_INFLUENCE]; // weights from each bone
 } Vertex;
 
-struct iTexture {
-    unsigned int id;
-    std::string  type;
-    std::string  path;
-};
-
 class Mesh {
   public:
     // mesh Data
     std::vector<Vertex>       vertices;
     std::vector<unsigned int> indices;
-    std::vector<iTexture>     textures;
+    std::vector<Texture>      textures;
     unsigned int              VAO;
 
     // default constructor
     Mesh() {}
 
     // constructor
-    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<iTexture> textures);
+    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
 
     // default deconstructor
     ~Mesh() {}

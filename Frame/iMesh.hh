@@ -8,8 +8,6 @@
 // TODO
 class iMesh {
   public:
-    bool                 withcolor; // whether with vertex color.
-    bool                 withtext;  // whether with texture coord.
     std::vector<GLfloat> vertices;  // all vertex point.
     std::vector<GLuint>  indices;   // all index.
     std::vector<GLint>   format;    // format for shader read.

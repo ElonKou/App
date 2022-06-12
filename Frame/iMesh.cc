@@ -65,8 +65,7 @@ void iMesh::Draw() {
 // ------------------------------------------------------------------------
 iMesh GetTriangle(float radius, bool color, bool texture) {
     iMesh ret;
-    ret.withcolor = true;
-    ret.vertices  = {
+    ret.vertices = {
         radius, -radius, 0.0f, 1.0f, 0.0f, 0.0f,  // right-down
         -radius, -radius, 0.0f, 0.0f, 1.0f, 0.0f, // left-down
         0.0f, radius, 0.0f, 0.0f, 0.0f, 1.0f      // mid-up
@@ -78,8 +77,7 @@ iMesh GetTriangle(float radius, bool color, bool texture) {
 
 iMesh GetRect(float radius) {
     iMesh ret;
-    ret.withcolor = true;
-    ret.vertices  = {
+    ret.vertices = {
         radius, -radius, 0.0f, 1.0f, 0.0f, 0.0f,  // 2
         radius, radius, 0.0f, 0.0f, 1.0f, 0.0f,   // 1
         -radius, radius, 0.0f, 0.0f, 0.0f, 1.0f,  // 0
@@ -97,9 +95,7 @@ iMesh GetRect(float radius) {
 
 iMesh GetRectWithCoord() {
     iMesh ret;
-    ret.withcolor = true;
-    ret.withtext  = true;
-    ret.vertices  = {
+    ret.vertices = {
         0.5, -0.5, 0.0f, 1.0f, 0.0f, // 2
         0.5, 0.5, 0.0f, 1.0f, 1.0f,  // 1
         -0.5, 0.5, 0.0f, 0.0f, 1.0f, // 0
@@ -115,9 +111,7 @@ iMesh GetRectWithCoord() {
 
 iMesh GetRectWithTexture(float radius) {
     iMesh ret;
-    ret.withcolor = true;
-    ret.withtext  = true;
-    ret.vertices  = {
+    ret.vertices = {
         radius, -radius, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, // 2
         radius, radius, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,  // 1
         -radius, radius, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, // 0
@@ -133,8 +127,7 @@ iMesh GetRectWithTexture(float radius) {
 
 iMesh GetRectWithoutColor(float radius) {
     iMesh ret;
-    ret.withcolor = false;
-    ret.vertices  = {
+    ret.vertices = {
         radius, -radius, 0.0f,  // 2
         radius, radius, 0.0f,   // 1
         -radius, radius, 0.0f,  // 0
@@ -165,9 +158,8 @@ iMesh GetSphere3D(float radius, int cnt) {
 iMesh GetHeart(int cnt) {
     // r = a(1 - sin theta)
     iMesh ret;
-    ret.withcolor = true;
-    float pi      = 3.141582653;
-    float a       = 0.5;
+    float pi = 3.141582653;
+    float a  = 0.5;
     for (int i = 0; i < cnt + 1; i++) {
         float ang = 2 * pi / cnt * i;
         ang       = ang + 0.5 * pi;
@@ -201,9 +193,7 @@ iMesh GetHeart(int cnt) {
 iMesh GetBox(float radius) {
     // return a 3d box.
     iMesh ret;
-    ret.withcolor = false;
-    ret.withtext  = true;
-    ret.vertices  = {
+    ret.vertices = {
         -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, //
         0.5f, -0.5f, -0.5f, 1.0f, 0.0f,  //
         0.5f, 0.5f, -0.5f, 1.0f, 1.0f,   //
@@ -261,9 +251,7 @@ iMesh GetMiddleBox(float radius) {
     //  |/      |/    |    /
     // 3/-------/2    |   x
     iMesh ret;
-    ret.withcolor = false;
-    ret.withtext  = true;
-    ret.vertices  = {
+    ret.vertices = {
         -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, // back
         0.5f, -0.5f, -0.5f, 1.0f, 0.0f,  //
         0.5f, 0.5f, -0.5f, 1.0f, 1.0f,   //
@@ -322,9 +310,7 @@ iMesh GetSimpleBox(float radius) {
     //  |/      |/    |    /
     // 3/-------/2    |   x
     iMesh ret;
-    ret.withcolor = false;
-    ret.withtext  = true;
-    ret.vertices  = {
+    ret.vertices = {
         -0.5, -0.5, -0.5, 0.0, 0.0, // 0
         -0.5, 0.5, -0.5, 0.0, 1.0,  // 1
         0.5, 0.5, -0.5, 1.0, 1.0,   // 2
@@ -356,9 +342,7 @@ iMesh GetSimpleBox(float radius) {
 iMesh GetPyramid() {
     // get iMesh of Pyramid.
     iMesh ret;
-    ret.withcolor = false;
-    ret.withtext  = true;
-    ret.vertices  = {
+    ret.vertices = {
         -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,  // left up
         0.5f, 0.5f, 0.0f, 1.0f, 1.0f,   // right up
         0.5f, -0.5f, 0.0f, 1.0f, 0.0f,  // right down
@@ -379,9 +363,7 @@ iMesh GetPyramid() {
 
 iMesh GetPlane3D(int zero_id) {
     iMesh ret;
-    ret.withcolor = true;
-    ret.withtext  = true;
-    ret.vertices  = {
+    ret.vertices = {
         0.5, -0.5, 0.0f, 1.0f, 0.0f, // 2
         0.5, 0.5, 0.0f, 1.0f, 1.0f,  // 1
         -0.5, 0.5, 0.0f, 0.0f, 1.0f, // 0

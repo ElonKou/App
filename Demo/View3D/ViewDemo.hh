@@ -7,7 +7,6 @@
 #include "Menu.hh"
 #include "OpenGLWindow.hh"
 #include "Scene.hh"
-#include "iMesh.hh"
 
 class ViewDemo : public Application {
   private:
@@ -17,7 +16,8 @@ class ViewDemo : public Application {
     std::shared_ptr<OpenGLWindow>  owin;
 
     std::shared_ptr<Scene> scene;
-    std::shared_ptr<iMesh> box;
+    std::shared_ptr<Mesh>  box;
+    std::shared_ptr<Model> model;
 
   public:
     ViewDemo() {}

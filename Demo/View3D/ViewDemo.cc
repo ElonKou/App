@@ -45,9 +45,11 @@ void ViewDemo::InitApp() {
     owin       = std::make_shared<OpenGLWindow>();
 
     scene      = std::make_shared<Scene>();
-    box        = std::make_shared<iMesh>();
-    *box.get() = GetBox();
-    scene->AddObj(box.get());
+    box        = std::make_shared<Mesh>();
+    *box.get() = GetBoxMesh();
+    model      = std::make_shared<Model>(APP_RESOURCES_PATH "/backpack/backpack.obj");
+    scene->AddMesh(box.get());
+    scene->AddModel(model.get());
 
     owin->SetScene(scene);
 }

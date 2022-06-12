@@ -16,10 +16,11 @@ unsigned int TextureFromFile(const char* path, const std::string& directory, boo
     unsigned int textureID;
     glGenTextures(1, &textureID);
 
-    int            width        = 0;
-    int            height       = 0;
-    int            nrComponents = 0;
-    unsigned char* data         = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+    int width        = 0;
+    int height       = 0;
+    int nrComponents = 0;
+    stbi_set_flip_vertically_on_load(true);
+    unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
     if (data) {
         GLenum format = GL_RGB;
         if (nrComponents == 1) {
@@ -51,9 +52,8 @@ Texture::Texture() {
 }
 
 Texture::Texture(std::string filename, std::string path_) {
-    stbi_set_flip_vertically_on_load(true);
     id   = TextureFromFile(filename.c_str(), path_);
-    type = "typeName";
+    type = "texture_diffuse";
     path = path_;
 }
 

@@ -16,6 +16,12 @@ Coord::Coord() {
     grid_size    = 0.002f;
     grid_shader  = new Shader({APP_SHADERS_PATH "/notexture.vs", APP_SHADERS_PATH "/notexture.fs"});
     color_shader = new Shader({APP_SHADERS_PATH "/colorvertex.vs", APP_SHADERS_PATH "/colorfrag.fs"});
+
+    grid_plane_x = GetPlaneMesh(0);
+    grid_plane_y = GetPlaneMesh(1);
+    grid_plane_z = GetPlaneMesh(2);
+    grid_box     = GetBoxMesh();
+    grid_pyramid = GetPyramidMesh();
 }
 
 Coord::~Coord() {
@@ -25,34 +31,6 @@ Coord::~Coord() {
     if (grid_shader) {
         delete grid_shader;
     }
-}
-
-void Coord::Init() {
-    grid_plane_x         = GetPlane3D(0);
-    grid_plane_x.shader  = grid_shader;
-    grid_plane_x.texture = nullptr;
-
-    grid_plane_y         = GetPlane3D(1);
-    grid_plane_y.shader  = grid_shader;
-    grid_plane_y.texture = nullptr;
-
-    grid_plane_z         = GetPlane3D(2);
-    grid_plane_z.shader  = grid_shader;
-    grid_plane_z.texture = nullptr;
-
-    grid_box         = GetBox();
-    grid_box.shader  = color_shader;
-    grid_box.texture = nullptr;
-
-    grid_pyramid         = GetPyramid();
-    grid_pyramid.shader  = color_shader;
-    grid_pyramid.texture = nullptr;
-
-    grid_plane_x.Init();
-    grid_plane_y.Init();
-    grid_plane_z.Init();
-    grid_box.Init();
-    grid_pyramid.Init();
 }
 
 void Coord::Draw() {
@@ -69,76 +47,76 @@ void Coord::Draw() {
     mycolor            = glm::vec3(0.0, 0.0, col);
     grid_plane_z.scale = glm::vec3(grid_range, grid_range, grid_range);
     model              = grid_plane_z.GetModelMatrix();
-    grid_plane_z.shader->Use();
-    grid_plane_z.shader->SetMat4f("model", model);
-    grid_plane_z.shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
-    grid_plane_z.Draw();
+    grid_shader->Use();
+    grid_shader->SetMat4f("model", model);
+    grid_shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
+    grid_plane_z.Draw(*grid_shader);
 
     grid_box.scale = glm::vec3(0.008, 0.008, grid_range);
     model          = grid_box.GetModelMatrix();
-    grid_box.shader->Use();
-    grid_box.shader->SetMat4f("model", model);
-    grid_box.shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
-    grid_box.Draw();
+    color_shader->Use();
+    color_shader->SetMat4f("model", model);
+    color_shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
+    grid_box.Draw(*color_shader);
 
     grid_pyramid.rotation = glm::vec3(0.0, 0.0, 0.0);
     grid_pyramid.pos      = glm::vec3(0.0, 0.0, grid_range / 2.0);
     grid_pyramid.scale    = glm::vec3(0.03, 0.03, 0.06);
     model                 = grid_pyramid.GetModelMatrix();
-    grid_pyramid.shader->Use();
-    grid_pyramid.shader->SetMat4f("model", model);
-    grid_pyramid.shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
-    grid_pyramid.Draw();
+    color_shader->Use();
+    color_shader->SetMat4f("model", model);
+    color_shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
+    grid_pyramid.Draw(*color_shader);
 
     // plane x
     mycolor            = glm::vec3(col, 0.0, 0.0);
     grid_plane_x.scale = glm::vec3(grid_range, grid_range, grid_range);
     model              = grid_plane_x.GetModelMatrix();
-    grid_plane_x.shader->Use();
-    grid_plane_x.shader->SetMat4f("model", model);
-    grid_plane_x.shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
-    grid_plane_x.Draw();
+    grid_shader->Use();
+    grid_shader->SetMat4f("model", model);
+    grid_shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
+    grid_plane_x.Draw(*grid_shader);
 
     grid_box.scale = glm::vec3(grid_range, 0.008, 0.008);
     model          = grid_box.GetModelMatrix();
-    grid_box.shader->Use();
-    grid_box.shader->SetMat4f("model", model);
-    grid_box.shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
-    grid_box.Draw();
+    color_shader->Use();
+    color_shader->SetMat4f("model", model);
+    color_shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
+    grid_box.Draw(*color_shader);
 
     grid_pyramid.rotation = glm::vec3(0.0, glm::radians(90.0), 0.0);
     grid_pyramid.pos      = glm::vec3(grid_range / 2.0, 0.0, 0.0);
     grid_pyramid.scale    = glm::vec3(0.03, 0.03, 0.06);
     model                 = grid_pyramid.GetModelMatrix();
-    grid_pyramid.shader->Use();
-    grid_pyramid.shader->SetMat4f("model", model);
-    grid_pyramid.shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
-    grid_pyramid.Draw();
+    color_shader->Use();
+    color_shader->SetMat4f("model", model);
+    color_shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
+    grid_pyramid.Draw(*color_shader);
 
     // plane y
     mycolor            = glm::vec3(0.0, col, 0.0);
     grid_plane_y.scale = glm::vec3(grid_range, grid_range, grid_range);
     model              = grid_plane_y.GetModelMatrix();
-    grid_plane_y.shader->Use();
-    grid_plane_y.shader->SetMat4f("model", model);
-    grid_plane_y.shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
-    grid_plane_y.Draw();
+    grid_shader->Use();
+    grid_shader->SetMat4f("model", model);
+    grid_shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
+    grid_plane_y.Draw(*grid_shader);
 
     grid_box.scale = glm::vec3(0.008, grid_range, 0.008);
     model          = grid_box.GetModelMatrix();
-    grid_box.shader->Use();
-    grid_box.shader->SetMat4f("model", model);
-    grid_box.shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
-    grid_box.Draw();
+    color_shader->Use();
+    color_shader->SetMat4f("model", model);
+    color_shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
+    grid_box.Draw(*color_shader);
 
     grid_pyramid.rotation = glm::vec3(glm::radians(-90.0), 0.0, 0.0);
     grid_pyramid.pos      = glm::vec3(0.0, grid_range / 2.0, 0.0);
     grid_pyramid.scale    = glm::vec3(0.03, 0.03, 0.06);
     model                 = grid_pyramid.GetModelMatrix();
-    grid_pyramid.shader->Use();
-    grid_pyramid.shader->SetMat4f("model", model);
-    grid_pyramid.shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
-    grid_pyramid.Draw();
+    color_shader->Use();
+    color_shader->SetMat4f("model", model);
+    color_shader->Set3f("mycol", mycolor.x, mycolor.y, mycolor.z);
+    grid_pyramid.Draw(*color_shader);
 
     glDisable(GL_BLEND);
     glDepthMask(GL_TRUE);

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-set(APP_VERSION 0.1.8)
+set(APP_VERSION 0.2.0)
 project(SomeApp VERSION ${APP_VERSION})
 add_definitions(-std=c++11 -Wall -Wformat)
 

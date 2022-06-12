@@ -1,6 +1,6 @@
 #pragma once
 
-#include "iMesh.hh"
+#include "Mesh.hh"
 #include "Shader.hh"
 
 class Coord {
@@ -10,11 +10,11 @@ class Coord {
 
     Shader* grid_shader;  // render for grid.
     Shader* color_shader; // render for axis.
-    iMesh    grid_plane_x;
-    iMesh    grid_plane_y;
-    iMesh    grid_plane_z;
-    iMesh    grid_box;
-    iMesh    grid_pyramid;
+    Mesh    grid_plane_x;
+    Mesh    grid_plane_y;
+    Mesh    grid_plane_z;
+    Mesh    grid_box;
+    Mesh    grid_pyramid;
 
   public:
     float grid_range; // grid range default = 1.0.
@@ -22,8 +22,6 @@ class Coord {
     Coord();
 
     ~Coord();
-
-    void Init();
 
     void Draw();
 

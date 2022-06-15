@@ -10,8 +10,9 @@ typedef struct Vertex {
     glm::vec3 pos;       // point of vertex.
     glm::vec3 normal;    // normal of vertex.
     glm::vec2 coord;     // texture coord.
-    glm::vec3 tangent;   // [not used] tangent
-    glm::vec3 bitangent; // [not used] bitangent
+    glm::vec3 color;     // color of vertex.
+    glm::vec3 tangent;   // [not used] tangent.
+    glm::vec3 bitangent; // [not used] bitangent.
 
     int   m_BoneIDs[MAX_BONE_INFLUENCE]; // bone indexes which will influence this vertex
     float m_Weights[MAX_BONE_INFLUENCE]; // weights from each bone
@@ -52,6 +53,8 @@ class Mesh {
     void setupMesh();
 };
 
+Mesh GetTriangleMesh();
+Mesh GetPlaneMesh(int axis = 2);
 Mesh GetBoxMesh();
-Mesh GetPlaneMesh(int axis=2);
 Mesh GetPyramidMesh();
+Mesh GetHeartMesh(int cnt = 24);

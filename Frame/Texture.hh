@@ -11,15 +11,6 @@
 unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma = false);
 
 class Texture {
-  private:
-    // static int     cnt;
-    // unsigned char* image;
-    int width;
-    int height;
-    int channel;
-    // GLuint         texture;
-    // int            texture_ids[16];
-
   public:
     unsigned int id;
     std::string  type;

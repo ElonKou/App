@@ -17,6 +17,7 @@ class ViewDemo : public Application {
 
     std::shared_ptr<Scene> scene;
     std::shared_ptr<Mesh>  box;
+    std::shared_ptr<Mesh>  some_obj;
     std::shared_ptr<Model> model;
 
   public:

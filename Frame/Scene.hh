@@ -15,7 +15,9 @@ class Scene {
     Coord                   coord;      // Coord with axis.
     bool                    draw_coord; // whether draw coord.
 
-    std::shared_ptr<Shader> deafult_shader;
+    std::shared_ptr<Shader> default_texture_shader; // shader with texture.
+    std::shared_ptr<Shader> default_color_shader;   // color shader for render use color.
+    std::shared_ptr<Shader> default_shader;         // default sahder.
 
     Scene();
 

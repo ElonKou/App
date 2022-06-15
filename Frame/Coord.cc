@@ -14,8 +14,8 @@ Coord::Coord() {
     grid_cnt     = 20;
     grid_range   = 2.0f;
     grid_size    = 0.002f;
-    grid_shader  = new Shader({APP_SHADERS_PATH "/notexture.vs", APP_SHADERS_PATH "/notexture.fs"});
-    color_shader = new Shader({APP_SHADERS_PATH "/colorvertex.vs", APP_SHADERS_PATH "/colorfrag.fs"});
+    grid_shader  = new Shader({APP_SHADERS_PATH "/coord_grid.vs", APP_SHADERS_PATH "/coord_grid.fs"});
+    color_shader = new Shader({APP_SHADERS_PATH "/dynamic_color.vs", APP_SHADERS_PATH "/dynamic_color.fs"});
 
     grid_plane_x = GetPlaneMesh(0);
     grid_plane_y = GetPlaneMesh(1);

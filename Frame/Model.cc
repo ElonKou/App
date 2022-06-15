@@ -71,6 +71,11 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
             vector.z      = mesh->mNormals[i].z;
             vertex.normal = vector;
         }
+        // if(mesh->HasVertexColors(0)){
+        //     vertex.color.x = mesh->mColors[0]->r;
+        //     vertex.color.y = mesh->mColors[0]->g;
+        //     vertex.color.z = mesh->mColors[0]->b;
+        // }
         // texture coordinates
         if (mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
         {
@@ -90,8 +95,9 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
             vector.y         = mesh->mBitangents[i].y;
             vector.z         = mesh->mBitangents[i].z;
             vertex.bitangent = vector;
-        } else
+        } else {
             vertex.coord = glm::vec2(0.0f, 0.0f);
+        }
 
         vertices.push_back(vertex);
     }

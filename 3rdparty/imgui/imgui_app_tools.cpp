@@ -45,14 +45,25 @@ bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_wid
     return true;
 }
 
-bool LoadImageFromFile(const char* filename, unsigned char** data_, GLuint* out_texture, int* out_width, int* out_height) {
+bool LoadImageFromFile(const char* filename, unsigned char** data_, GLuint* out_texture, int* out_width, int* out_height, int* out_channel, GLenum* format) {
     // Load from file [no free data]
-    int            image_width  = 0;
-    int            image_height = 0;
-    unsigned char* data         = stbi_load(filename, &image_width, &image_height, NULL, 4);
-    *data_                      = data;
+    int image_width  = 0;
+    int image_height = 0;
+    int nrComponents = 0;
+    // stbi_set_flip_vertically_on_load(true);
+    unsigned char* data = stbi_load(filename, &image_width, &image_height, &nrComponents, 0);
     if (data == NULL)
         return false;
+
+    *data_         = data;
+    GLenum format_ = GL_RGB;
+    if (nrComponents == 1) {
+        format_ = GL_RED;
+    } else if (nrComponents == 3) {
+        format_ = GL_RGB;
+    } else if (nrComponents == 4) {
+        format_ = GL_RGBA;
+    }
 
     // Create a OpenGL texture identifier
     GLuint image_texture;
@@ -65,15 +76,17 @@ bool LoadImageFromFile(const char* filename, unsigned char** data_, GLuint* out_
 
     // Upload pixels into texture
     glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_width, image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, format_, image_width, image_height, 0, format_, GL_UNSIGNED_BYTE, data);
 
     *out_texture = image_texture;
     *out_width   = image_width;
     *out_height  = image_height;
+    *out_channel = nrComponents;
+    *format      = format_;
     return true;
 }
 
-bool SetImageData(unsigned char* data, GLuint texture_id, int width, int height) {
+bool SetImageData(unsigned char* data, GLuint texture_id, int width, int height, GLenum format) {
     if (data == NULL)
         return false;
 
@@ -85,7 +98,7 @@ bool SetImageData(unsigned char* data, GLuint texture_id, int width, int height)
 
     // Upload pixels into texture
     glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 
     return true;
 }

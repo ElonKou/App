@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-set(APP_VERSION 0.2.1)
+set(APP_VERSION 0.2.2)
 project(SomeApp VERSION ${APP_VERSION})
 add_definitions(-std=c++11 -Wall -Wformat)
 
@@ -8,8 +8,9 @@ file(GLOB APP_SRC "3rdparty/imgui/*.cpp")
 aux_source_directory(Frame APP_SRC)
 aux_source_directory(Demo/DemoCommon APP_SRC)
 # aux_source_directory(Demo/AppDemo APP_SRC)
-aux_source_directory(Demo/View3D APP_SRC)
+# aux_source_directory(Demo/View3D APP_SRC)
 # aux_source_directory(Demo/Physics2D APP_SRC)
+aux_source_directory(Demo/RayTracing APP_SRC)
 
 add_subdirectory(3rdparty/assimp)
 
@@ -22,8 +23,9 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/Frame
     ${PROJECT_SOURCE_DIR}/Demo/DemoCommon
     # ${PROJECT_SOURCE_DIR}/Demo/AppDemo
-    ${PROJECT_SOURCE_DIR}/Demo/View3D
+    # ${PROJECT_SOURCE_DIR}/Demo/View3D
     # ${PROJECT_SOURCE_DIR}/Demo/Physics2D
+    ${PROJECT_SOURCE_DIR}/Demo/RayTracing
 )
 
 # [config]

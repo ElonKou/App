@@ -20,7 +20,7 @@ ImVec2 vec2iImVec2(vec2i& v);
 
 bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_width, int* out_height);
 
-bool LoadImageFromFile(const char* filename, unsigned char** data, GLuint* out_texture, int* out_width, int* out_height);
+bool LoadImageFromFile(const char* filename, unsigned char** data, GLuint* out_texture, int* out_width, int* out_height, int* out_channel, GLenum *format);
 
-bool SetImageData(unsigned char* data, GLuint texture_id, int width, int height);
+bool SetImageData(unsigned char* data, GLuint texture_id, int width, int height, GLenum format);
 #endif

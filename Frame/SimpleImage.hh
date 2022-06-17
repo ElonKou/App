@@ -35,6 +35,8 @@ class SimpleImage {
     }
 
     inline void SetPixel(const int& w, const int& h, const glm::vec3& v) {
+        if (w > width || w < 0 || h > height || h < 0)
+            std::cout << "Error image index" << std::endl;
         if (data) {
             data[(h * width + w) * 3 + 0] = (unsigned char)255 * v.x;
             data[(h * width + w) * 3 + 1] = (unsigned char)255 * v.y;

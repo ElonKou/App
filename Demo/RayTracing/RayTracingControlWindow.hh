@@ -1,11 +1,11 @@
 #pragma once
 
-#include "SimpleImage.hh"
+#include "RayTracingCore.hh"
 #include "WindowBase.hh"
 
 class RayTracingControlWindow : WindowBase {
   public:
-    std::shared_ptr<SimpleImage> img;
+    std::shared_ptr<RayTracingCore> core;
 
     RayTracingControlWindow();
 

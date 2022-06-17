@@ -16,14 +16,12 @@ RayTracingControlWindow::~RayTracingControlWindow() {
 
 void RayTracingControlWindow::Show() {
     if (ImGui::Begin("RayTracingControlWindow")) {
-        if (img) {
-            if (ImGui::Button("change")) {
-                for (size_t i = 0; i < img->height; i++) {
-                    for (size_t j = 0; j < img->width; j++) {
-                        img->SetPixel(j, i, glm::vec3(i * 1.0 / img->height, j * 1.0 / img->width, 0.5));
-                    }
-                }
-                img->Upload();
+        if (core) {
+            if (ImGui::Button("Change for Test")) {
+                core->ChangeColor();
+            }
+            if (ImGui::Button("TayTracing Render")) {
+                core->Render();
             }
         }
         ImGui::End();

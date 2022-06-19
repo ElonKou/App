@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Application.hh"
+#include "RayDielectric.hh"
+#include "RayLambertian.hh"
+#include "RayMetal.hh"
 #include "RaySphere.hh"
 #include "RayTracingCamera.hh"
 #include "RayTracingControlWindow.hh"
@@ -18,8 +21,6 @@ class RayTracingDemo : public Application {
     std::shared_ptr<RayTracingWindow>        disp;
 
     std::shared_ptr<RayTracingScene> scene;
-    std::shared_ptr<RaySphere>       sphere1;
-    std::shared_ptr<RaySphere>       sphere2;
 
     RayTracingDemo();
 

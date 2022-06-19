@@ -23,7 +23,7 @@ class SimpleImage {
     ~SimpleImage();
 
     // updload into GPU memory.
-    void Upload();
+    void UploadImage();
 
     void GenerateImage(int w, int h, int c);
 
@@ -38,9 +38,12 @@ class SimpleImage {
         if (w > width || w < 0 || h > height || h < 0)
             std::cout << "Error image index" << std::endl;
         if (data) {
-            data[(h * width + w) * 3 + 0] = (unsigned char)255 * v.x;
-            data[(h * width + w) * 3 + 1] = (unsigned char)255 * v.y;
-            data[(h * width + w) * 3 + 2] = (unsigned char)255 * v.z;
+            data[(h * width + w) * 3 + 0] = (unsigned char)(255.0f * glm::clamp(v.x, 0.0f, 0.999999f));
+            data[(h * width + w) * 3 + 1] = (unsigned char)(255.0f * glm::clamp(v.y, 0.0f, 0.999999f));
+            data[(h * width + w) * 3 + 2] = (unsigned char)(255.0f * glm::clamp(v.z, 0.0f, 0.999999f));
+            // data[(h * width + w) * 3 + 0] = (unsigned char)255 * v.x;
+            // data[(h * width + w) * 3 + 1] = (unsigned char)255 * v.y;
+            // data[(h * width + w) * 3 + 2] = (unsigned char)255 * v.z;
         }
     }
 };

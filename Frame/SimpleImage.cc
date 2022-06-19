@@ -36,7 +36,7 @@ SimpleImage::~SimpleImage() {
     }
 }
 
-void SimpleImage::Upload() {
+void SimpleImage::UploadImage() {
     if (data) {
         bool ret = SetImageData(data, img_id, width, height, format);
         if (!ret) {

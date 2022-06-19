@@ -25,9 +25,9 @@ class DisplyWindow : public WindowBase {
 
             if (ImGui::Button("change")) {
                 for (size_t i = 0; i < 1024 * 50; i++) {
-                    img->data[i * 4 + 3] = 10;
+                    img->data[i * 3 + 3] = 10;
                 }
-                img->Upload();
+                img->UploadImage();
             }
 
             ImGui::End();

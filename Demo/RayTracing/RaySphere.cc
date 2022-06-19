@@ -9,9 +9,10 @@
 #include "RaySphere.hh"
 RaySphere::RaySphere() {}
 
-RaySphere::RaySphere(glm::vec3 pos, float r)
+RaySphere::RaySphere(glm::vec3 pos, float r, std::shared_ptr<RayMaterial> m)
     : center(pos)
-    , radius(r) {
+    , radius(r)
+    , mat(m) {
 }
 
 RaySphere::~RaySphere() {}
@@ -34,7 +35,8 @@ bool RaySphere::Hit(Ray& r, float t_min, float t_max, RayHitRecord& rec) {
         }
         rec.t      = root;
         rec.pos    = r.at(rec.t);
-        rec.normal = glm::normalize(rec.pos - center);
+        rec.mat    = mat;
+        rec.normal = (rec.pos - center) / radius;
         rec.SetFaceNormal(r, rec.normal);
         return true;
     }

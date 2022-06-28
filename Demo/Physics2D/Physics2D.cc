@@ -21,7 +21,7 @@ void Physics2D::UpdateObjects(float dt) {
         return;
     }
     int sub_steps = 32;
-    for (size_t i = 0; i < sub_steps; i++) {
+    for (int i = 0; i < sub_steps; i++) {
         // auto st = std::chrono::high_resolution_clock::now();
         SetVelocity();
         // auto  ed   = std::chrono::high_resolution_clock::now();

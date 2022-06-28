@@ -54,7 +54,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath) {
         fShaderFile.close();
         vertexCode   = vShaderStream.str();
         fragmentCode = fShaderStream.str();
-    } catch (std::ifstream::failure e) {
+    } catch (std::ifstream::failure &) {
         std::cout << "ERROR::SHADER::FAIL_NOT_SUCCESSFULLY_READ" << std::endl;
     }
     const GLchar* vertexCodes   = vertexCode.c_str();

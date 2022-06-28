@@ -22,9 +22,14 @@ void OpenGLWindow::Show() {
         // bool x = ImGui::IsWindowFocused();
         // std::cout << x << std::endl;
         if (scene && fbuffer) {
-            ImVec2 window_st       = ImGui::GetCurrentWindow()->Pos;
-            ImVec2 window_end      = ImGui::GetCurrentWindow()->Pos + ImGui::GetCurrentWindow()->Size;
-            ImVec2 window_size     = ImGui::GetCurrentWindow()->Size * 2 - ImVec2(0, 64);
+            ImVec2 window_st  = ImGui::GetCurrentWindow()->Pos;
+            ImVec2 window_end = ImGui::GetCurrentWindow()->Pos + ImGui::GetCurrentWindow()->Size;
+#ifdef __APPLE__
+            ImVec2 window_size = ImGui::GetCurrentWindow()->Size * 2 - ImVec2(0, 64);
+#else
+            ImVec2 window_size = ImGui::GetCurrentWindow()->Size - ImVec2(0, 32);
+#endif
+
             scene->cam->cam_width  = window_size.x;
             scene->cam->cam_height = window_size.y;
             scene->cam->st         = glm::vec2(window_st.x, window_st.y);
@@ -38,7 +43,11 @@ void OpenGLWindow::Show() {
             fbuffer->Unbind();
 
             uint64_t textureID = fbuffer->GetTextureId();
+#ifdef __APPLE__
             ImGui::Image(reinterpret_cast<void*>(textureID), window_size / 2, ImVec2{0, 1}, ImVec2{1, 0});
+#else
+            ImGui::Image(reinterpret_cast<void*>(textureID), window_size, ImVec2{0, 1}, ImVec2{1, 0});
+#endif
         }
         ImGui::End();
     }

@@ -50,11 +50,11 @@ void RayTracingCore::ResetCamera() {
 void RayTracingCore::Render() {
     if (img) {
         Ray r;
-        for (size_t i = 0; i < img->height; i++) {
-            for (size_t j = 0; j < img->width; j++) {
+        for (int i = 0; i < img->height; i++) {
+            for (int j = 0; j < img->width; j++) {
                 std::cerr << "\rScanlines remaining: " << img->height - i << ' ' << std::flush;
                 glm::vec3 color = glm::vec3(0.0f);
-                for (size_t k = 0; k < samples; k++) {
+                for (int k = 0; k < samples; k++) {
                     float u = 1.0f * (j + GetRandomFloat()) / (img->width - 1);
                     float v = 1.0f * (i + GetRandomFloat()) / (img->height - 1);
                     r       = cam->GetRay(u, v);
@@ -73,8 +73,8 @@ void RayTracingCore::Render() {
 
 void RayTracingCore::ChangeColor() {
     if (img) {
-        for (size_t i = 0; i < img->height; i++) {
-            for (size_t j = 0; j < img->width; j++) {
+        for (int i = 0; i < img->height; i++) {
+            for (int j = 0; j < img->width; j++) {
                 img->SetPixel(j, i, glm::vec3(i * 1.0 / img->height, j * 1.0 / img->width, 0.5));
             }
         }

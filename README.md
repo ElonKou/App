@@ -14,7 +14,7 @@ View3D Demo
 ![](./resources/app/view3d_demo1.png)
 
 
-## insatll
+## install
 
 ```bash
 # insatll requirements.
@@ -28,7 +28,13 @@ brew install glfw3 glew
 git clone https://github.com/ElonKou/App.git --recursive
 
 # compile & run
-.run.sh
+./run.sh
 
-# manuel compile
+# manual compile
+cd App
+make build
+cd build
+cmake ..
+make -j 11
+./SomeApp
 ```
